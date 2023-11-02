@@ -57,18 +57,7 @@ class Mind_Blower {
          * @type {HTMLElement|null}
          */
         this.__root;
-        /**
-         * The name of the application
-         * @type {string}
-         */
-        this.__name;
-        /**
-         * The assets of the application
-         * @type {string[]}
-         */
-        this.__assets;
         this.init();
-        this.install();
     }
 
     /**
@@ -162,36 +151,6 @@ class Mind_Blower {
     }
 
     /**
-     * @returns {string}
-     */
-    getName() {
-        return this.__name;
-    }
-
-    /**
-     * @param {string} name
-     * @returns {void}
-     */
-    setName(name) {
-        this.__name = name;
-    }
-
-    /**
-     * @returns {string[]}
-     */
-    getAssets() {
-        return this.__assets;
-    }
-
-    /**
-     * @param {string[]} assets
-     * @returns {void}
-     */
-    setAssets(assets) {
-        this.__assets = assets;
-    }
-
-    /**
      * Initializing the application
      * @returns {void}
      */
@@ -199,9 +158,6 @@ class Mind_Blower {
         this.setRequestURI(window.location.pathname);
         this.setBody(document.body);
         this.setRoot(document.querySelector(":root"));
-        this.setName("Mind-Blower-v0.0.0");
-        this.setAssets([]);
-        this.register();
         fetch(this.getRequestURI(), {
             method: "HEAD",
         })
@@ -294,47 +250,6 @@ class Mind_Blower {
         this.getRoot().style.setProperty("--color2", color2);
         this.getRoot().style.setProperty("--color3", color3);
     }
-    
-    /**
-     * Allowing the application to be installed by the web-browser
-     * @returns {void}
-     */
-    install() {
-        this.getAssets().push(
-            "/",
-            "/Templates/Template.html",
-            "/Static/Stylesheets/Mind_Blower.css",
-            "/Static/Stylesheets/desktop.css",
-            "/Static/Stylesheets/mobile.css",
-            "/Static/Stylesheets/tablet.css",
-            "/Static/Scripts/JS/Mind_Blower.js",
-            "/Static/SVG/Logo.svg",
-            "/Components/Header.js",
-            "/Components/Main.js",
-            "/Components/Footer.js",
-        );
-        self.addEventListener("install", (installEvent) => {
-            installEvent.waitUntil(
-                caches.open(this.getName())
-                .then((cache) => cache.addAll(this.getAssets()))
-            )
-        });
-    }
-
-    /**
-     * Running the progressive web application
-     * @returns {void}
-     */
-    run() {
-        self.addEventListener("fetch", (fetchEvent) => {
-            fetchEvent.respondWith(
-                caches.match(fetchEvent.request)
-                .then((response) => {
-                    return response || fetch(fetchEvent.request)
-                })
-            )
-        });
-    }
 
     /**
      * Registering the application
@@ -343,7 +258,7 @@ class Mind_Blower {
     register() {
         if ("serviceWorker" in navigator) {
             window.addEventListener("load", () => {
-                navigator.serviceWorker.register("/Static/Scripts/JS/Mind_Blower.js")
+                navigator.serviceWorker.register("/Static/Scripts/JS/Service_Worker.js")
                 .then((response) => console.log("The application is registered!"))
                 .catch((error) => console.log(`The application is not registered due to ${error}`))
             });
