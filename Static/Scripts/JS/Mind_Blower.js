@@ -53,24 +53,10 @@ class Mind_Blower {
          */
         this.__body;
         /**
-         * Class name of the body
-         * @type {string}
+         * The root element of the application.
+         * @type {HTMLElement|null}
          */
-        this.__bodyClassName;
-        /**
-         * Contains the title for a document.  This element inherits
-         * all of the properties and methods of the HTMLElement
-         * interface.
-         * @type {HTMLTitleElement}
-         */
-        this.__title;
-        /**
-         * Contains descriptive metadata about a document.  It inherits
-         * all of the properties and methods described in the
-         * HTMLElement interface.
-         * @type {HTMLMetaElement|null}
-         */
-        this.__meta;
+        this.__root;
         this.init();
     }
 
@@ -150,48 +136,18 @@ class Mind_Blower {
     }
 
     /**
-     * @returns {string}
+     * @returns {HTMLElement|null}
      */
-    getBodyClassName() {
-        return this.__bodyClassName;
+    getRoot() {
+        return this.__root;
     }
 
     /**
-     * @param {string} body_class_name
+     * @param {HTMLElement|null} root
      * @returns {void}
      */
-    setBodyClassName(body_class_name) {
-        this.__bodyClassName = body_class_name;
-    }
-
-    /**
-     * @returns {HTMLTitleElement}
-     */
-    getTitle() {
-        return this.__title;
-    }
-
-    /**
-     * @param {HTMLTitleElement} title
-     * @returns {void}
-     */
-    setTitle(title) {
-        this.__title = title;
-    }
-
-    /**
-     * @returns {HTMLMetaElement|null}
-     */
-    getMeta() {
-        return this.__meta;
-    }
-
-    /**
-     * @param {HTMLMetaElement|null} meta
-     * @returns {void}
-     */
-    setMeta(meta) {
-        this.__meta = meta;
+    setRoot(root) {
+        this.__root = root;
     }
 
     /**
@@ -269,6 +225,7 @@ class Mind_Blower {
         const width = `${root.clientWidth}px`;
         root.style.setProperty("--height", height);
         root.style.setProperty("--width", width);
+
     }
 }
 const application = new Mind_Blower();
