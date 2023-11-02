@@ -5,4 +5,7 @@ switch ($Router->getRoute()) {
     case '/':
         $Router->get($Router->getRoute(), "/Views/Homepage.php");
         break;
+    case '/Access':
+        $Router->get($Router->getRoute(), "/Views/Access.php");
+        break;
 }
