@@ -1,0 +1,37 @@
+:root {
+    --textSize: calc(var(--height) / 30);
+}
+body {
+    margin: calc(var(--height) * 0) calc(var(--width) * 0);
+    height: var(--height);
+    font-size: var(--textSize);
+    width: var(--width);
+}
+header,
+footer {
+    height: calc(var(--height) / 10);
+}
+main {
+    height: calc(var(--height) * 0.8);
+}
+body[status="404"] header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    letter-spacing: calc(var(--width) / 400);
+    font-weight: bold;
+    font-size: calc(var(--textSize) * 1.1);
+}
+body[status="404"] main {
+    letter-spacing: calc(var(--width) / 400);
+    display: flex;
+    justify-content: center;
+}
+body[status="404"] footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+body[status="404"] footer svg {
+    height: calc(var(--textSize) * 3);
+}
