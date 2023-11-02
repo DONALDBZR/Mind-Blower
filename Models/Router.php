@@ -63,18 +63,34 @@ class Router
     }
 
     /**
+     * Verifying that the file exists in order to import it for the
+     * server to serve it.
+     * @return  void
+     */
+    private function verifyFile(): void
+    {
+        if (file_exists($this->getPath())) {
+            require_once "{$this->getRoot()}{$this->getPath()}";
+            http_response_code(200);
+            exit();
+        } else {
+            require_once "{$this->getRoot()}/Views/HTTP404.php";
+            http_response_code(404);
+            exit();
+        }
+    }
+
+    /**
      * Selecting data from the server
      * @param   string  $route  The url of the view or controller
      * @param   string  $path   The path of the view or controller
      * @return  void
      */
-    public function get(string $route, string $path)
+    public function get(string $route, string $path): void
     {
         $this->setPath($path);
         if ($route != "/404") {
-            require_once "{$this->getRoot()}{$this->getPath()}";
-            http_response_code(200);
-            exit();
+            $this->verifyFile();
         } else {
             require_once "{$this->getRoot()}/Views/HTTP404.php";
             http_response_code(404);
@@ -88,7 +104,7 @@ class Router
      * @param   string  $path   The path of the view or controller
      * @return  void
      */
-    public function post(string $route, string $path)
+    public function post(string $route, string $path): void
     {
         $this->setPath($path);
         if ($route != "/404") {
@@ -106,7 +122,7 @@ class Router
      * Creating Session
      * @return  void
      */
-    public function createSession()
+    public function createSession(): void
     {
         $data = array(
             "ip_address" => $_SERVER['REMOTE_ADDR'],
@@ -121,7 +137,7 @@ class Router
      * Verifying that the session is not hijacked
      * @return  void
      */
-    public function verifySession()
+    public function verifySession(): void
     {
         $directory = "{$_SERVER['DOCUMENT_ROOT']}/Cache/Session/Users/";
         $sessionFiles = array_values(array_diff(scandir($directory), array(".", "..")));
@@ -143,7 +159,7 @@ class Router
             $this->createSession();
         }
     }
-    
+
     /**
      * Converting an object to an array
      * @param   mixed   $data   Data that is in the cache data
