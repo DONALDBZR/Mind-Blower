@@ -20,6 +20,7 @@ class Router
      * @var string $path
      */
     private string $path;
+
     /**
      * Creating the object which takes two parameters to verify the request method and session
      * @param   string  $route  The url of the view or controller
@@ -30,30 +31,37 @@ class Router
         $this->setRoute($route);
         $this->verifySession();
     }
+
     public function getRoute(): string
     {
         return $this->route;
     }
+
     public function setRoute(string $route): void
     {
         $this->route = $route;
     }
+
     public function getPath(): string
     {
         return $this->path;
     }
+
     public function setPath(string $path): void
     {
         $this->path = $path;
     }
+
     public function getRoot(): string
     {
         return $this->root;
     }
+
     public function setRoot(string $root): void
     {
         $this->root = $root;
     }
+
     /**
      * Selecting data from the server
      * @param   string  $route  The url of the view or controller
@@ -73,6 +81,7 @@ class Router
             exit();
         }
     }
+
     /**
      * Inserting data in the server
      * @param   string  $route  The url of the view or controller
@@ -92,6 +101,7 @@ class Router
             exit();
         }
     }
+
     /**
      * Creating Session
      * @return  void
@@ -106,6 +116,7 @@ class Router
         );
         $_SESSION['Client'] = $data;
     }
+
     /**
      * Verifying that the session is not hijacked
      * @return  void
@@ -132,6 +143,7 @@ class Router
             $this->createSession();
         }
     }
+    
     /**
      * Converting an object to an array
      * @param   mixed   $data   Data that is in the cache data
