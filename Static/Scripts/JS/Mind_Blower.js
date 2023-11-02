@@ -319,5 +319,20 @@ class Mind_Blower {
             )
         });
     }
+
+    /**
+     * Running the progressive web application
+     * @returns {void}
+     */
+    run() {
+        self.addEventListener("fetch", fetchEvent => {
+            fetchEvent.respondWith(
+                caches.match(fetchEvent.request)
+                .then((response) => {
+                    return response || fetch(fetchEvent.request)
+                })
+            )
+        });
+    }
 }
 const application = new Mind_Blower();
