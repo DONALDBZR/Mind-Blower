@@ -2,5 +2,15 @@
     "name": "Mind Blower",
     "short_name": "MindBlower",
     "start_url": "index.php",
-    "display": "standalone"
+    "display": "standalone",
+    "background_color": "#FFFFFF",
+    "theme_color": "#FFFFFF",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/Static/SVG/Logo.svg",
+            "type": "image/svg+xml",
+            "size": "72x72"
+        }
+    ]
 }
