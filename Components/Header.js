@@ -69,4 +69,17 @@ class Header extends React.Component {
     }
 }
 
+/**
+ * The component to be rendered when content is not found
+ */
+class NotFound extends Header {
+    /**
+     * Renders the components that are being returned
+     * @returns {HTMLHeaderElement}
+     */
+    render() {
+        return <>HTTP/404</>;
+    }
+}
+
 ReactDOM.render(<Header />, document.querySelector("header"));
