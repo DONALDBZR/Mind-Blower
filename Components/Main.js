@@ -65,6 +65,8 @@ class Main extends React.Component {
     render() {
         if (this.state.System.status == 404) {
             return <NotFound />;
+        } else {
+            return this.verifyRoute();
         }
     }
 }
