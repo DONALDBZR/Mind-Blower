@@ -225,7 +225,30 @@ class Mind_Blower {
         const width = `${this.getRoot().clientWidth}px`;
         this.getRoot().style.setProperty("--height", height);
         this.getRoot().style.setProperty("--width", width);
+        this.setColorScheme();
+    }
 
+    /**
+     * Verifying the preferred color scheme of the user in order to
+     * set the default application's color scheme.
+     * @returns {void}
+     */
+    setColorScheme() {
+        let color1 = "";
+        let color2 = "";
+        let color3 = "";
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            color1 = "rgb(calc(var(--percentage) * (255 / 255)), calc(var(--percentage) * (255 / 255)), calc(var(--percentage) * (192 / 255)))";
+            color2 = "rgb(calc(var(--percentage) * (185 / 255)), calc(var(--percentage) * (0 / 255)), calc(var(--percentage) * (255 / 255)))";
+            color3 = "rgb(calc(var(--percentage) * (0 / 255)), calc(var(--percentage) * (0 / 255)), calc(var(--percentage) * (82 / 255)))";
+        } else {
+            color1 = "rgb(calc(var(--percentage) * (185 / 255)), calc(var(--percentage) * (0 / 255)), calc(var(--percentage) * (255 / 255)))";
+            color2 = "rgb(calc(var(--percentage) * (255 / 255)), calc(var(--percentage) * (255 / 255)), calc(var(--percentage) * (192 / 255)))";
+            color3 = "rgb(calc(var(--percentage) * (0 / 255)), calc(var(--percentage) * (0 / 255)), calc(var(--percentage) * (82 / 255)))";
+        }
+        this.getRoot().style.setProperty("--color1", color1);
+        this.getRoot().style.setProperty("--color2", color2);
+        this.getRoot().style.setProperty("--color3", color3);
     }
 }
 const application = new Mind_Blower();
