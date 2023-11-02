@@ -215,10 +215,9 @@ class Mind_Blower {
      * @returns {void}
      */
     handleHeadResponse(status_code) {
+        this.getBody().setAttribute("status", status_code);
         if (status_code == 200) {
             this.verifyRoute();
-        } else {
-            this.getBody().className = status_code;
         }
     }
 
