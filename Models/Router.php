@@ -69,7 +69,7 @@ class Router
      */
     private function verifyFile(): void
     {
-        if (file_exists($this->getPath())) {
+        if (file_exists("{$this->getRoot()}{$this->getPath()}")) {
             require_once "{$this->getRoot()}{$this->getPath()}";
             http_response_code(200);
             exit();
@@ -89,6 +89,7 @@ class Router
     public function get(string $route, string $path): void
     {
         $this->setPath($path);
+        echo "Route: {$route}<br />Request Method: {$_SERVER['REQUEST_METHOD']}<br />Path: {$this->getRoot()}{$this->getPath()}<br />";
         if ($route != "/404") {
             $this->verifyFile();
         } else {
