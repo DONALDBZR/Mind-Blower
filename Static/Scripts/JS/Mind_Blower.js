@@ -237,7 +237,7 @@ class Mind_Blower {
         let color1 = "";
         let color2 = "";
         let color3 = "";
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        if (window.matchMedia('(prefers-color-scheme: light)').matches) {
             color1 = "rgb(calc(var(--percentage) * (255 / 255)), calc(var(--percentage) * (255 / 255)), calc(var(--percentage) * (192 / 255)))";
             color2 = "rgb(calc(var(--percentage) * (185 / 255)), calc(var(--percentage) * (0 / 255)), calc(var(--percentage) * (255 / 255)))";
             color3 = "rgb(calc(var(--percentage) * (0 / 255)), calc(var(--percentage) * (0 / 255)), calc(var(--percentage) * (82 / 255)))";
