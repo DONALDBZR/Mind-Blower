@@ -27,11 +27,40 @@ body[status="404"] main {
     display: flex;
     justify-content: center;
 }
-body[status="404"] footer {
+body[status="404"] footer,
+#Homepage footer {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-body[status="404"] footer svg {
+body[status="404"] footer svg,
+#Homepage footer svg {
     height: calc(var(--textSize) * 3);
+}
+#Homepage header nav {
+    height: inherit;
+    display: flex;
+}
+#Homepage header nav div {
+    width: calc(var(--width) / 2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#Homepage header nav div:nth-child(1) {
+    width: calc(var(--width) * (2 / 3));
+}
+#Homepage header nav div:nth-child(1) a {
+    width: calc(var(--textSize) * 2);
+}
+#Homepage header nav div:nth-child(2) {
+    width: calc(var(--width) / 3);
+}
+#Homepage header nav div:nth-child(2) a {
+    font-size: calc(var(--textSize) * 2);
+}
+#Homepage main {
+    letter-spacing: calc(var(--width) / 400);
+    display: flex;
+    justify-content: center;
 }
