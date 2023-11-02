@@ -157,6 +157,7 @@ class Mind_Blower {
     init() {
         this.setRequestURI(window.location.pathname);
         this.setBody(document.body);
+        this.setRoot(document.querySelector(":root"));
         fetch(this.getRequestURI(), {
             method: "HEAD",
         })
@@ -220,11 +221,10 @@ class Mind_Blower {
      * @returns {void}
      */
     resizeApplication() {
-        const root = document.querySelector(":root");
-        const height = `${root.clientHeight}px`;
-        const width = `${root.clientWidth}px`;
-        root.style.setProperty("--height", height);
-        root.style.setProperty("--width", width);
+        const height = `${this.getRoot().clientHeight}px`;
+        const width = `${this.getRoot().clientWidth}px`;
+        this.getRoot().style.setProperty("--height", height);
+        this.getRoot().style.setProperty("--width", width);
 
     }
 }
