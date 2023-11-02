@@ -57,6 +57,17 @@ class Header extends React.Component {
             }
         }));
     }
+
+    /**
+     * Verifying the path name of the application to render the
+     * component correctly.
+     * @returns {HTMLHeaderElement}
+     */
+    verifyRoute() {
+        if (this.state.System.route == "/" || this.state.System.route == "") {
+            return <Homepage />;
+        }
+    }
     
     /**
      * Renders the components that are being returned
