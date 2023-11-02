@@ -216,13 +216,22 @@ body {
     background-color: var(--color1);
     color: var(--color2);
 }
-body[status="404"] header {
-    color: var(--color3);
-    font-family: var(--proximaNova);
-}
+body[status="404"] header,
 body[status="404"] main {
     font-family: var(--proximaNova);
 }
-body[status="404"] footer svg g path {
+body[status="404"] footer svg g path,
+#Homepage header nav div:nth-child(1) a:hover svg g path,
+#Homepage footer svg g path {
     fill: var(--color2);
+}
+#Homepage header nav div:nth-child(1) a svg g path {
+    fill: var(--color3);
+}
+body[status="404"] header,
+#Homepage header nav div:nth-child(2) a {
+    color: var(--color3);
+}
+#Homepage header nav div:nth-child(2) a:hover {
+    color: var(--color2);
 }
