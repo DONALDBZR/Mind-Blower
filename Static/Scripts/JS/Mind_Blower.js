@@ -201,6 +201,7 @@ class Mind_Blower {
         this.setRoot(document.querySelector(":root"));
         this.setName("Mind-Blower-v0.0.0");
         this.setAssets([]);
+        this.register();
         fetch(this.getRequestURI(), {
             method: "HEAD",
         })
@@ -312,7 +313,7 @@ class Mind_Blower {
             "/Components/Main.js",
             "/Components/Footer.js",
         );
-        self.addEventListener("install", installEvent => {
+        self.addEventListener("install", (installEvent) => {
             installEvent.waitUntil(
                 caches.open(this.getName())
                 .then((cache) => cache.addAll(this.getAssets()))
@@ -325,7 +326,7 @@ class Mind_Blower {
      * @returns {void}
      */
     run() {
-        self.addEventListener("fetch", fetchEvent => {
+        self.addEventListener("fetch", (fetchEvent) => {
             fetchEvent.respondWith(
                 caches.match(fetchEvent.request)
                 .then((response) => {
@@ -333,6 +334,20 @@ class Mind_Blower {
                 })
             )
         });
+    }
+
+    /**
+     * Registering the application
+     * @returns {void}
+     */
+    register() {
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("/Static/Scripts/JS/Mind_Blower.js")
+                .then((response) => console.log("The application is registered!"))
+                .catch((error) => console.log(`The application is not registered due to ${error}`))
+            });
+        }
     }
 }
 const application = new Mind_Blower();
