@@ -83,6 +83,23 @@ class Main extends React.Component {
 }
 
 /**
+ * The component to be rendered for the Homepage.
+ */
+class Homepage extends Main {
+    /**
+     * Renders the components that are being returned
+     * @returns {HTMLMainElement}
+     */
+    render() {
+        return (
+            <>
+                Welcome to Mind Blower.  It is a CRM that will help you to manage the relationships with your customers.
+            </>
+        );
+    }
+}
+
+/**
  * The component to be rendered when content is not found
  */
 class NotFound extends Main {
