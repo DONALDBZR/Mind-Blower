@@ -12,7 +12,9 @@ footer {
     height: calc(var(--height) / 10);
 }
 main {
-    height: calc(var(--height) * 0.8);
+    --main-height: calc(var(
+    --height) * 0.8);
+    height: var(--main-height);
 }
 body[status="404"] header {
     display: flex;
@@ -28,39 +30,120 @@ body[status="404"] main {
     justify-content: center;
 }
 body[status="404"] footer,
-#Homepage footer {
+#Homepage footer,
+body[id*="Access"] footer {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 body[status="404"] footer svg,
-#Homepage footer svg {
+#Homepage footer svg,
+body[id*="Access"] footer svg {
     height: calc(var(--textSize) * 3);
 }
-#Homepage header nav {
+#Homepage header nav,
+body[id*="Access"] header nav {
     height: inherit;
     display: flex;
 }
-#Homepage header nav div {
+#Homepage header nav div,
+body[id*="Access"] header nav div {
     width: calc(var(--width) / 2);
     display: flex;
     justify-content: center;
     align-items: center;
 }
-#Homepage header nav div:nth-child(1) {
+#Homepage header nav div:nth-child(1),
+body[id*="Access"] header nav div:nth-child(1)  {
     width: calc(var(--width) * (2 / 3));
 }
-#Homepage header nav div:nth-child(1) a {
+#Homepage header nav div:nth-child(1) a,
+body[id*="Access"] header nav div:nth-child(1) a {
     width: calc(var(--textSize) * 2);
 }
-#Homepage header nav div:nth-child(2) {
+#Homepage header nav div:nth-child(2),
+body[id*="Access"] header nav div:nth-child(2) {
     width: calc(var(--width) / 3);
 }
-#Homepage header nav div:nth-child(2) a {
+#Homepage header nav div:nth-child(2) a,
+body[id*="Access"] header nav div:nth-child(2) a {
     font-size: calc(var(--textSize) * 2);
 }
 #Homepage main {
     letter-spacing: calc(var(--width) / 400);
     display: flex;
     justify-content: center;
+}
+body[id*="Access"] main {
+    display: flex;
+}
+body[id*="Access"] main div {
+    --main-access-width: calc(var(
+    --width) / 2);
+    width: var(--main-access-width);
+}
+body[id*="Access"] main div:nth-child(1) div:nth-child(1) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(var(--main-height) / 10);
+    font-size: calc(var(--textSize) * 1.1);
+    letter-spacing: calc(var(--main-access-width) / 400);
+    font-weight: bold;
+}
+body[id*="Access"] main div:nth-child(1) .Features {
+    --main-access-features-height: calc(var(
+    --main-height) * 0.9);
+    height: var(--main-access-features-height);
+}
+body[id*="Access"] main div:nth-child(1) .Features div {
+    justify-content: normal;
+    height: calc(var(--main-access-features-height) / 10);
+    align-items: normal;
+    font-size: calc(var(--textSize) * 1);
+    font-weight: normal;
+    width: calc(var(--main-access-width) / 2);
+    margin-inline: calc(var(--main-access-width) / 4);
+    margin-block: calc(var(--main-access-features-height) / 100);
+    border-radius: calc(var(--main-access-features-height) / 10);
+}
+body[id*="Access"] main div:nth-child(1) .Features div div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    --main-access-features-feature-width: calc(var(
+    --main-access-width) / 2);
+    width: calc(var(--main-access-features-feature-width) / 2);
+    margin-inline: calc(var(--main-access-width) * 0);
+    margin-block: calc(var(--main-access-features-height) * 0);
+}
+body[id*="Access"] main div:nth-child(1) .Features div div:nth-child(1) {
+    width: calc(var(--main-access-features-feature-width) / 10);
+}
+body[id*="Access"] main div:nth-child(1) .Features div div:nth-child(2) {
+    width: calc(var(--main-access-features-feature-width) * 0.9);
+}
+body[id*="Access"] main .Access div {
+    display: flex;
+}
+body[id*="Access"] main .Access div:nth-child(1) {
+    height: calc(var(--main-height) / 10);
+    justify-content: center;
+    align-items: center;
+    letter-spacing: calc(var(--main-access-width) / 400);
+    font-weight: bold;
+    font-size: calc(var(--textSize) * 1.1);
+}
+body[id*="Access"] main .Access div:nth-child(2) div {
+    height: calc(var(--main-height) / 10);
+    justify-content: center;
+    align-items: center;
+    letter-spacing: calc(var(--main-access-width) / 400);
+    font-size: calc(var(--textSize) * 1);
+    font-weight: bold;
+}
+body[id*="Access"] main .Access div:nth-child(2) div a {
+    padding-block: calc(var(--main-height) / 100);
+    padding-inline: calc(var(--main-access-width) / 100);
+    border-radius: calc(var(--main-height) / 10);
 }
