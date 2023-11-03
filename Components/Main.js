@@ -67,7 +67,7 @@ class Main extends React.Component {
     /**
      * Verifying the path name of the application to render the
      * component correctly.
-     * @returns {HTMLHeaderElement}
+     * @returns {HTMLMainElement}
      */
     verifyRoute() {
         if (this.state.System.route == "/" || this.state.System.route == "") {
@@ -116,14 +116,15 @@ class Access extends Main {
         super(props);
     }
 
-    render() {
-        return (
-            <>
-                <div>
-                    <div>Features of the application</div>
-                    <Features />
-                </div>
-                <div>
+    /**
+     * Verifying the route of the state during the Access Portal to
+     * render the correct Portal.
+     * @returns {HTMLDivElement}
+     */
+    verifyAccess() {
+        if (this.state.System.route == "/Access") {
+            return (
+                <div class={this.state.System.route.replace("/", "")}>
                     <div>In order to use the system you need to have an account.</div>
                     <div>
                         <div>
@@ -134,6 +135,18 @@ class Access extends Main {
                         </div>
                     </div>
                 </div>
+            );
+        }
+    }
+
+    render() {
+        return (
+            <>
+                <div>
+                    <div>Features of the application</div>
+                    <Features />
+                </div>
+                {this.verifyAccess()}
             </>
         );
     }
