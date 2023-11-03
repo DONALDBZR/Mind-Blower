@@ -64,7 +64,7 @@ class Header extends React.Component {
      * @returns {HTMLHeaderElement}
      */
     verifyRoute() {
-        if (this.state.System.route == "/" || this.state.System.route == "") {
+        if (this.state.System.route == "/" || this.state.System.route == "" || this.state.System.route.includes("/Access")) {
             return <Homepage />;
         }
     }
