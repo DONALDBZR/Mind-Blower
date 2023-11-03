@@ -11,13 +11,19 @@ class Main extends React.Component {
         super(props);
         /**
          * The states of the application
-         * @type {{ System: { route: string, color_scheme: string, status: number } }}
+         * @type {{ System: { route: string, color_scheme: string, status: number, features: [ { logo: string, description: string } ] } }}
          */
         this.state = {
             System: {
                 route: "",
                 color_scheme: "",
                 status: 200,
+                features: [
+                    {
+                        logo: "fa-solid fa-phone",
+                        description: "Contact Management",
+                    }
+                ],
             },
         };
     }
@@ -66,6 +72,8 @@ class Main extends React.Component {
     verifyRoute() {
         if (this.state.System.route == "/" || this.state.System.route == "") {
             return <Homepage />;
+        } else if (this.state.System.route.includes("/Access")) {
+            return <Access />;
         }
     }
 
@@ -86,15 +94,81 @@ class Main extends React.Component {
  * The component to be rendered for the Homepage.
  */
 class Homepage extends Main {
-    /**
-     * Renders the components that are being returned
-     * @returns {HTMLMainElement}
-     */
+    constructor(props) {
+        super(props);
+    }
+    
     render() {
         return (
             <>
                 Welcome to Mind Blower.  It is a CRM that will help you to manage the relationships with your customers.
             </>
+        );
+    }
+}
+
+/**
+ * The component to be rendered for the pages that are related
+ * the access portal.
+ */
+class Access extends Main {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <>
+                <div>
+                    <div>Features of the application</div>
+                    <Features />
+                </div>
+                <div>
+                    <div>In order to use the system you need to have an account.</div>
+                    <div>
+                        <div>
+                            <a href="/Access/Login">Login</a>
+                        </div>
+                        <div>
+                            <a href="/Access/Register">Register</a>
+                        </div>
+                    </div>
+                </div>
+            </>
+        );
+    }
+}
+
+/**
+ * The component that will render the features that the
+ * application offers.
+ */
+class Features extends Access {
+    constructor(props) {
+        super(props);
+    }
+
+    /**
+     * Rendering the features of the application dynamically.
+     * @param {{ logo: string, description: string }} feature
+     * @returns {HTMLDivElement}
+     */
+    renderFeature(feature) {
+        return (
+            <div>
+                <div>
+                    <i class={feature.logo}></i>
+                </div>
+                <div>{feature.description}</div>
+            </div>
+        );
+    }
+
+    render() {
+        return (
+            <div class="Features">
+                {this.state.System.features.map((feature) => this.renderFeature(feature))}
+            </div>
         );
     }
 }
