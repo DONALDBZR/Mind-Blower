@@ -217,21 +217,38 @@ body {
     color: var(--color2);
 }
 body[status="404"] header,
-body[status="404"] main {
+body[status="404"] main,
+body[id*="Access"] main div:nth-child(1) div:nth-child(1) {
     font-family: var(--proximaNova);
 }
 body[status="404"] footer svg g path,
 #Homepage header nav div:nth-child(1) a:hover svg g path,
-#Homepage footer svg g path {
+#Homepage footer svg g path,
+body[id*="Access"] header nav div:nth-child(1) a:hover svg g path,
+body[id*="Access"] footer svg g path {
     fill: var(--color2);
 }
-#Homepage header nav div:nth-child(1) a svg g path {
+#Homepage header nav div:nth-child(1) a svg g path,
+body[id*="Access"] header nav div:nth-child(1) a svg g path {
     fill: var(--color3);
 }
 body[status="404"] header,
-#Homepage header nav div:nth-child(2) a {
+#Homepage header nav div:nth-child(2) a,
+body[id*="Access"] header nav div:nth-child(2) a {
     color: var(--color3);
 }
-#Homepage header nav div:nth-child(2) a:hover {
+#Homepage header nav div:nth-child(2) a:hover,
+body[id*="Access"] header nav div:nth-child(2) a:hover {
     color: var(--color2);
+}
+body[id*="Access"] main div:nth-child(1) .Features div {
+    background-color: var(--color3);
+}
+body[id*="Access"] main .Access div:nth-child(2) div a {
+    text-decoration: none;
+    color: var(--color2);
+    background-color: var(--color3);
+}
+body[id*="Access"] main .Access div:nth-child(2) div a:hover {
+    background-color: var(--color1);
 }
