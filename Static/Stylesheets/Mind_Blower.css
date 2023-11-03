@@ -208,7 +208,7 @@
 }
 :root {
     --percentage: 100%;
-    --pacifico: "Pacifico";
+    --sourceCodePro: "Source Code Pro";
     --proximaNova: "Proxima Nova";
 }
 body {
@@ -251,4 +251,8 @@ body[id*="Access"] main .Access div:nth-child(2) div a {
 }
 body[id*="Access"] main .Access div:nth-child(2) div a:hover {
     background-color: var(--color1);
+}
+body[id*="Access"] main .Access div:nth-child(2) div a {
+    font-family: var(--sourceCodePro);
+    text-transform: uppercase;
 }
