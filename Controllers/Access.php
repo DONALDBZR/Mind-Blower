@@ -16,8 +16,7 @@ class Access
         $name = get_class($this);
         $portal_address = "/{$name}";
         $this->setRequestUri(str_replace($portal_address, "", $_SERVER["REQUEST_URI"]));
-        echo "<pre>Class Name: {$name}<br />Portal Address: {$portal_address}<br />Route: {$this->getRequestUri()}<br />";
-        var_dump($_SERVER);
+        $this->initialize();
     }
 
     public function getRequestUri(): string
@@ -28,5 +27,15 @@ class Access
     public function setRequestUri(string $request_uri): void
     {
         $this->request_uri = $request_uri;
+    }
+
+    /**
+     * Initializing the controller which will map all the address
+     * according its routing.
+     * @return void
+     */
+    public function initialize(): void
+    {
+        
     }
 }
