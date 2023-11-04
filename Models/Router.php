@@ -162,7 +162,7 @@ class Router
      * server to serve it.
      * @return  void
      */
-    private function verifyFile(): void
+    public function verifyFile(): void
     {
         $current_time = date("Y-m-d H:i:s", $this->getCurrentTime());
         $expiry_time = date("Y-m-d H:i:s", $this->getExpiryTime());
