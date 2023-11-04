@@ -3,96 +3,17 @@
  * It is the controller which controls the sub-directory for
  * the Access portal.
  */
-class Access
+class Access extends Router
 {
-    /**
-     * The request uniform resource information of the hypertext
-     * transfer protocol.
-     * @var string $request_uri
-     */
-    private string $request_uri;
-    /**
-     * The server on which the application is being hosted
-     * @var string $root
-     */
-    private string $root;
-    /**
-     * The request method of the HTTP request.
-     * @var string $request_method
-     */
-    private string $request_method;
-    /**
-     * The current time of the request in UNIX timestamp for the
-     * server processing.
-     * @var int $current_time
-     */
-    private int $current_time;
-    /**
-     * The expiry time of the request in UNIX timestamp for the
-     * server processing.
-     * @var int $expiry_time
-     */
-    private int $expiry_time;
-
     public function __construct() {
         $name = get_class($this);
         $portal_address = "/{$name}";
-        $this->setRequestUri(str_replace($portal_address, "", $_SERVER["REQUEST_URI"]));
+        $this->setRoute(str_replace($portal_address, "", $_SERVER['REQUEST_URI']));
         $this->setRoot($_SERVER['DOCUMENT_ROOT']);
         $this->setRequestMethod($_SERVER['REQUEST_METHOD']);
         $this->initialize();
     }
-
-    public function getRequestUri(): string
-    {
-        return $this->request_uri;
-    }
-
-    public function setRequestUri(string $request_uri): void
-    {
-        $this->request_uri = $request_uri;
-    }
-
-    public function getRoot(): string
-    {
-        return $this->root;
-    }
-
-    public function setRoot(string $root): void
-    {
-        $this->root = $root;
-    }
-
-    public function getRequestMethod(): string
-    {
-        return $this->request_method;
-    }
-
-    public function setRequestMethod(string $request_method): void
-    {
-        $this->request_method = $request_method;
-    }
-
-    public function getCurrentTime(): int
-    {
-        return $this->current_time;
-    }
-
-    public function setCurrentTime(int $current_time): void
-    {
-        $this->current_time = $current_time;
-    }
-
-    public function getExpiryTime(): int
-    {
-        return $this->expiry_time;
-    }
-
-    public function setExpiryTime(int $expiry_time): void
-    {
-        $this->expiry_time = $expiry_time;
-    }
-
+    
     /**
      * Initializing the controller which will map all the address
      * according its routing.
@@ -102,11 +23,11 @@ class Access
     {
         $this->setCurrentTime(time());
         $this->setExpiryTime($this->getCurrentTime() + 3600);
-        if ($this->getRequestUri() == "" || $this->getRequestUri() == "/") {
+        if ($this->getRoute() == "" || $this->getRoute() == "/") {
             $this->index();
             exit;
         } else {
-            $function_name = strtolower(str_replace("/", "", $this->getRequestUri()));
+            $function_name = strtolower(str_replace("/", "", $this->getRoute()));
             $this->{$function_name}();
             exit;
         }
@@ -118,6 +39,6 @@ class Access
      */
     public function index():void
     {
-        require_once "{$this->getRoot()}/Views/Access/Homepage.php";
+        $this->get("/Views/Access/Homepage.php");
     }
 }
