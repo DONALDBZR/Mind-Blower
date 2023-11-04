@@ -68,6 +68,10 @@ class Access
      */
     public function initialize(): void
     {
-        
+        if ($this->getRequestUri() == "" || $this->getRequestUri() == "/") {
+            $this->index();
+        } else {
+            $this->{$this->getRequestUri()}();
+        }
     }
 }
