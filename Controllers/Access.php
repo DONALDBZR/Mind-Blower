@@ -106,7 +106,8 @@ class Access
             $this->index();
             exit;
         } else {
-            $this->{$this->getRequestUri()}();
+            $function_name = strtolower(str_replace("/", "", $this->getRequestUri()));
+            $this->{$function_name}();
             exit;
         }
     }
