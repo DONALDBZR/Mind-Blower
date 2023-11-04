@@ -153,8 +153,17 @@ class Router
      */
     public function get(string $path): void
     {
+        $current_time = date("Y-m-d H:i:s", $this->getCurrentTime());
+        $expiry_time = date("Y-m-d H:i:s", $this->getExpiryTime());
         $this->setPath($path);
         $this->verifyFile();
+        header("Content-Type: text/html; charset=UTF-8", true, $this->getStatusCode());
+        header("Date: {$current_time}", true, $this->getStatusCode());
+        header("Expires: {$expiry_time}", true, $this->getStatusCode());
+        header("Cache-Control: private; max-age=3600", true, $this->getStatusCode());
+        header("Server: Mind Blower", true, $this->getStatusCode());
+        header_remove("Pragma");
+        exit;
     }
 
     /**
@@ -164,8 +173,6 @@ class Router
      */
     public function verifyFile(): void
     {
-        $current_time = date("Y-m-d H:i:s", $this->getCurrentTime());
-        $expiry_time = date("Y-m-d H:i:s", $this->getExpiryTime());
         if (file_exists("{$this->getRoot()}{$this->getPath()}")) {
             require_once "{$this->getRoot()}{$this->getPath()}";
             $this->setStatusCode(200);
@@ -173,12 +180,5 @@ class Router
             require_once "{$this->getRoot()}/Views/HTTP404.php";
             $this->setStatusCode(404);
         }
-        header("Content-Type: text/html; charset=UTF-8", true, $this->getStatusCode());
-        header("Date: {$current_time}", true, $this->getStatusCode());
-        header("Expires: {$expiry_time}", true, $this->getStatusCode());
-        header("Cache-Control: private; max-age=3600", true, $this->getStatusCode());
-        header("Server: Mind Blower", true, $this->getStatusCode());
-        header_remove("Pragma");
-        exit();
     }
 }
