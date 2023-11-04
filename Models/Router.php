@@ -141,7 +141,7 @@ class Router
             exit;
         } else {
             require_once "{$this->getRoot()}/Controllers/{$routes[1]}.php";
-            $controller = new $routes[1]();
+            new $routes[1]();
             exit;
         }
     }
