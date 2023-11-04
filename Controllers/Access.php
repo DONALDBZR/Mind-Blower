@@ -70,8 +70,19 @@ class Access
     {
         if ($this->getRequestUri() == "" || $this->getRequestUri() == "/") {
             $this->index();
+            exit;
         } else {
             $this->{$this->getRequestUri()}();
+            exit;
         }
+    }
+
+    /**
+     * Taking the action needed
+     * @return void
+     */
+    public function index():void
+    {
+        require_once "{$this->getRoot()}/Views/Access/Homepage.php";
     }
 }
