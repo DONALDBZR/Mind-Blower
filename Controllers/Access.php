@@ -27,6 +27,12 @@ class Access
      * @var int $current_time
      */
     private int $current_time;
+    /**
+     * The expiry time of the request in UNIX timestamp for the
+     * server processing.
+     * @var int $expiry_time
+     */
+    private int $expiry_time;
 
     public function __construct() {
         $name = get_class($this);
@@ -75,6 +81,16 @@ class Access
     public function setCurrentTime(int $current_time): void
     {
         $this->current_time = $current_time;
+    }
+
+    public function getExpiryTime(): int
+    {
+        return $this->expiry_time;
+    }
+
+    public function setExpiryTime(int $expiry_time): void
+    {
+        $this->expiry_time = $expiry_time;
     }
 
     /**

@@ -38,7 +38,8 @@ class Router
      */
     private int $current_time;
     /**
-     * The expiry time of the request in UNIX timestamp for the server processing.
+     * The expiry time of the request in UNIX timestamp for the
+     * server processing.
      * @var int $expiry_time
      */
     private int $expiry_time;
