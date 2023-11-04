@@ -1,7 +1,8 @@
 <?php
 session_start();
 /**
- * The router that will route all the requests to the application.
+ * The router that will route all the requests to the
+ * application.
  */
 class Router
 {
@@ -20,16 +21,38 @@ class Router
      * @var string $path
      */
     private string $path;
+    /**
+     * The HTTP Status code
+     * @var int $status_code
+     */
+    private int $status_code;
+    /**
+     * The request method of the HTTP request.
+     * @var string $request_method
+     */
+    private string $request_method;
+    /**
+     * The current time of the request in UNIX timestamp for the
+     * server processing.
+     * @var int $current_time
+     */
+    private int $current_time;
+    /**
+     * The expiry time of the request in UNIX timestamp for the server processing.
+     * @var int $expiry_time
+     */
+    private int $expiry_time;
 
     /**
-     * Creating the object which takes two parameters to verify the request method and session
-     * @param   string  $route  The url of the view or controller
+     * Creating the object which takes two parameters to verify the
+     * request method and session
      */
-    public function __construct(string $route)
+    public function __construct()
     {
         $this->setRoot($_SERVER['DOCUMENT_ROOT']);
-        $this->setRoute($route);
-        $this->verifySession();
+        $this->setRoute($_SERVER['REQUEST_URI']);
+        $this->setRequestMethod($_SERVER['REQUEST_METHOD']);
+        $this->initialize();
     }
 
     public function getRoute(): string
@@ -62,6 +85,77 @@ class Router
         $this->root = $root;
     }
 
+    public function getStatusCode(): int
+    {
+        return $this->status_code;
+    }
+
+    public function setStatusCode(int $status_code): void
+    {
+        $this->status_code = $status_code;
+    }
+
+    public function getRequestMethod(): string
+    {
+        return $this->request_method;
+    }
+
+    public function setRequestMethod(string $request_method): void
+    {
+        $this->request_method = $request_method;
+    }
+
+    public function getCurrentTime(): int
+    {
+        return $this->current_time;
+    }
+
+    public function setCurrentTime(int $current_time): void
+    {
+        $this->current_time = $current_time;
+    }
+
+    public function getExpiryTime(): int
+    {
+        return $this->expiry_time;
+    }
+
+    public function setExpiryTime(int $expiry_time): void
+    {
+        $this->expiry_time = $expiry_time;
+    }
+
+    /**
+     * Initiliazing the router to verify the HTTP request before
+     * allowing the server to serve data.
+     * @return void
+     */
+    public function initialize(): void
+    {
+        $this->setCurrentTime(time());
+        $this->setExpiryTime($this->getCurrentTime() + 3600);
+        $routes = explode("/", $this->getRoute());
+        if ($this->getRoute() == "/") {
+            $this->get("/Views/Homepage.php");
+            exit;
+        } else {
+            require_once "{$this->getRoot()}/Controllers/{$routes[1]}.php";
+            $controller = new $routes[1]();
+            exit;
+        }
+    }
+
+    /**
+     * Selecting data from the server
+     * @param string $path The path of the view or controller
+     * @return void
+     */
+    public function get(string $path): void
+    {
+        $this->setPath($path);
+        $this->verifyFile();
+    }
+
     /**
      * Verifying that the file exists in order to import it for the
      * server to serve it.
@@ -69,111 +163,21 @@ class Router
      */
     private function verifyFile(): void
     {
+        $current_time = date("Y-m-d H:i:s", $this->getCurrentTime());
+        $expiry_time = date("Y-m-d H:i:s", $this->getExpiryTime());
         if (file_exists("{$this->getRoot()}{$this->getPath()}")) {
             require_once "{$this->getRoot()}{$this->getPath()}";
-            http_response_code(200);
-            exit();
+            $this->setStatusCode(200);
         } else {
             require_once "{$this->getRoot()}/Views/HTTP404.php";
-            http_response_code(404);
-            exit();
+            $this->setStatusCode(404);
         }
-    }
-
-    /**
-     * Selecting data from the server
-     * @param   string  $route  The url of the view or controller
-     * @param   string  $path   The path of the view or controller
-     * @return  void
-     */
-    public function get(string $route, string $path): void
-    {
-        $this->setPath($path);
-        if ($route != "/404") {
-            $this->verifyFile();
-        } else {
-            require_once "{$this->getRoot()}/Views/HTTP404.php";
-            http_response_code(404);
-            exit();
-        }
-    }
-
-    /**
-     * Inserting data in the server
-     * @param   string  $route  The url of the view or controller
-     * @param   string  $path   The path of the view or controller
-     * @return  void
-     */
-    public function post(string $route, string $path): void
-    {
-        $this->setPath($path);
-        if ($route != "/404") {
-            $_POST[$route] = (object) json_decode(file_get_contents("php://input"));
-            require_once "{$this->getRoot()}{$this->getPath()}";
-            http_response_code(200);
-            exit();
-        } else {
-            http_response_code(404);
-            exit();
-        }
-    }
-
-    /**
-     * Creating Session
-     * @return  void
-     */
-    public function createSession(): void
-    {
-        $data = array(
-            "ip_address" => $_SERVER['REMOTE_ADDR'],
-            "http_client_ip_address" => $_SERVER['HTTP_CLIENT_IP'],
-            "proxy_ip_address" => $_SERVER['HTTP_X_FORWARDED_FOR'],
-            "access_time" => time()
-        );
-        $_SESSION['Client'] = $data;
-    }
-
-    /**
-     * Verifying that the session is not hijacked
-     * @return  void
-     */
-    public function verifySession(): void
-    {
-        $directory = "{$_SERVER['DOCUMENT_ROOT']}/Cache/Session/Users/";
-        $sessionFiles = array_values(array_diff(scandir($directory), array(".", "..")));
-        for ($index = 0; $index < count($sessionFiles); $index++) {
-            $session = json_decode(file_get_contents("{$directory}{$sessionFiles[$index]}"));
-            $sessionData = $this->objectToArray($session);
-            if ($_SESSION['Client']['ip_address'] == $session->Client->ip_address) {
-                $_SESSION = $sessionData;
-            }
-        }
-        if (isset($_SESSION['Client'])) {
-            if ($_SERVER['REMOTE_ADDR'] == $_SESSION['Client']['ip_address']) {
-                $_SESSION['Client']['access_time'] = time();
-            } else {
-                session_unset();
-                session_destroy();
-            }
-        } else {
-            $this->createSession();
-        }
-    }
-
-    /**
-     * Converting an object to an array
-     * @param   mixed   $data   Data that is in the cache data
-     * @return  array
-     */
-    public function objectToArray(mixed $data): array
-    {
-        if (is_array($data) || is_object($data)) {
-            $result = array();
-            foreach ($data as $key => $value) {
-                $result[$key] = (is_array($value) || is_object($value) ? $this->objectToArray($value) : $value);
-            }
-            return $result;
-        }
-        return $data;
+        header("Content-Type: text/html; charset=UTF-8", true, $this->getStatusCode());
+        header("Date: {$current_time}", true, $this->getStatusCode());
+        header("Expires: {$expiry_time}", true, $this->getStatusCode());
+        header("Cache-Control: private; max-age=3600", true, $this->getStatusCode());
+        header("Server: Mind Blower", true, $this->getStatusCode());
+        header_remove("Pragma");
+        exit();
     }
 }
