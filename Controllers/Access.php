@@ -16,12 +16,18 @@ class Access
      * @var string $root
      */
     private string $root;
+    /**
+     * The request method of the HTTP request.
+     * @var string $request_method
+     */
+    private string $request_method;
 
     public function __construct() {
         $name = get_class($this);
         $portal_address = "/{$name}";
         $this->setRequestUri(str_replace($portal_address, "", $_SERVER["REQUEST_URI"]));
         $this->setRoot($_SERVER['DOCUMENT_ROOT']);
+        $this->setRequestMethod($_SERVER['REQUEST_METHOD']);
         $this->initialize();
     }
 
@@ -43,6 +49,16 @@ class Access
     public function setRoot(string $root): void
     {
         $this->root = $root;
+    }
+
+    public function getRequestMethod(): string
+    {
+        return $this->request_method;
+    }
+
+    public function setRequestMethod(string $request_method): void
+    {
+        $this->request_method = $request_method;
     }
 
     /**
