@@ -21,6 +21,12 @@ class Access
      * @var string $request_method
      */
     private string $request_method;
+    /**
+     * The current time of the request in UNIX timestamp for the
+     * server processing.
+     * @var int $current_time
+     */
+    private int $current_time;
 
     public function __construct() {
         $name = get_class($this);
@@ -61,6 +67,16 @@ class Access
         $this->request_method = $request_method;
     }
 
+    public function getCurrentTime(): int
+    {
+        return $this->current_time;
+    }
+
+    public function setCurrentTime(int $current_time): void
+    {
+        $this->current_time = $current_time;
+    }
+
     /**
      * Initializing the controller which will map all the address
      * according its routing.
@@ -68,6 +84,8 @@ class Access
      */
     public function initialize(): void
     {
+        $this->setCurrentTime(time());
+        $this->setExpiryTime($this->getCurrentTime() + 3600);
         if ($this->getRequestUri() == "" || $this->getRequestUri() == "/") {
             $this->index();
             exit;
