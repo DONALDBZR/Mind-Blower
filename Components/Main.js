@@ -78,6 +78,19 @@ class Main extends React.Component {
     }
 
     /**
+     * Handling any error that is returned from the server.
+     * @returns {HTMLMainElement}
+     */
+    handleError() {
+        switch (this.state.System.status) {
+            case 404:
+                return <NotFound />;
+            case 501:
+                return <NotImplemented />;
+        }
+    }
+
+    /**
      * Renders the components that are being returned
      * @returns {HTMLMainElement}
      */
