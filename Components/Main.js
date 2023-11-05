@@ -212,4 +212,18 @@ class NotFound extends Main {
     }
 }
 
+/**
+ * The component to be rendered when a module has not been
+ * implemented.
+ */
+class NotImplemented extends Main {
+    /**
+     * Renders the components that are being returned
+     * @returns {HTMLMainElement}
+     */
+    render() {
+        return <>The module/service has not been implemented!</>;
+    }
+}
+
 ReactDOM.render(<Main />, document.querySelector("main"));
