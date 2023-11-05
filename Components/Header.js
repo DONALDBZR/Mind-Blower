@@ -122,7 +122,7 @@ class Error extends Header {
      * @returns {HTMLHeaderElement}
      */
     render() {
-        return <>HTTP/404</>;
+        return <>HTTP/{this.state.System.status}</>;
     }
 }
 
