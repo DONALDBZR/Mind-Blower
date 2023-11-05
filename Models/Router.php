@@ -140,9 +140,36 @@ class Router
             $this->setPath("/Views/Homepage.php");
             $this->index();
         } else {
-            $this->{$routes[1]}();
+            $this->verifyModule($routes[1]);
         }
         exit;
+    }
+
+    /**
+     * Verifying the modules needed before giving access to the
+     * content.
+     * @param string $module The module of the application.
+     * @return void
+     */
+    public function verifyModule(string $module): void
+    {
+        $current_time = date("Y-m-d H:i:s", $this->getCurrentTime());
+        $expiry_time = date("Y-m-d H:i:s", $this->getExpiryTime());
+        $this->setPath("/Controllers/{$module}.php");
+        if (file_exists("{$this->getRoot()}{$this->getPath()}")) {
+            require_once "{$this->getRoot()}{$this->getPath()}";
+            new $module();
+        } else {
+            require_once "{$this->getRoot()}/Views/HTTP404.php";
+            $this->setStatusCode(404);
+            header("Content-Type: text/html; charset=UTF-8", true, $this->getStatusCode());
+            header("Date: {$current_time}", true, $this->getStatusCode());
+            header("Expires: {$expiry_time}", true, $this->getStatusCode());
+            header("Cache-Control: private; max-age=3600", true, $this->getStatusCode());
+            header("Server: Mind Blower", true, $this->getStatusCode());
+            header_remove("Pragma");
+            exit;
+        }
     }
 
     /**
