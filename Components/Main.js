@@ -82,10 +82,10 @@ class Main extends React.Component {
      * @returns {HTMLMainElement}
      */
     render() {
-        if (this.state.System.status == 404) {
-            return <NotFound />;
-        } else {
+        if (this.state.System.status == 200) {
             return this.verifyRoute();
+        } else {
+            return this.handleError();
         }
     }
 }
