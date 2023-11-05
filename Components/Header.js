@@ -77,7 +77,7 @@ class Header extends React.Component {
         if (this.state.System.status == 200) {
             return this.verifyRoute();
         } else {
-            return this.handleError();
+            return <Error />;
         }
     }
 }
@@ -116,7 +116,7 @@ class Homepage extends Header {
 /**
  * The component to be rendered when content is not found
  */
-class NotFound extends Header {
+class Error extends Header {
     /**
      * Renders the components that are being returned
      * @returns {HTMLHeaderElement}
