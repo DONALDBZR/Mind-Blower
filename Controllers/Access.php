@@ -9,6 +9,8 @@ class Access extends Router
         $name = get_class($this);
         $portal_address = "/{$name}";
         $this->setRoute(str_replace($portal_address, "", $_SERVER['REQUEST_URI']));
+        $this->setRoot($_SERVER['DOCUMENT_ROOT']);
+        $this->setRequestMethod($_SERVER['REQUEST_METHOD']);
         $this->initialize();
     }
     
