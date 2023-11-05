@@ -137,13 +137,11 @@ class Router
         $this->setExpiryTime($this->getCurrentTime() + 3600);
         $routes = explode("/", $this->getRoute());
         if ($this->getRoute() == "/") {
-            $this->get("/Views/Homepage.php");
-            exit;
+            $this->index();
         } else {
-            require_once "{$this->getRoot()}/Controllers/{$routes[1]}.php";
-            new $routes[1]();
-            exit;
+            $this->{$routes[1]}();
         }
+        exit;
     }
 
     /**
