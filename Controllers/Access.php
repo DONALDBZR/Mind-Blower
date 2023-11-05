@@ -28,13 +28,36 @@ class Access extends Router
             exit;
         } else {
             $function_name = strtolower(str_replace("/", "", $this->getRoute()));
-            $this->{$function_name}();
+            $this->verifyRoute($function_name);
             exit;
         }
     }
 
     /**
-     * Taking the action needed
+     * Verifying that the route is implemented to serve the data
+     * needed.
+     * @param string $function_name The name of the function which is the name of the route.
+     * @return void
+     */
+    public function verifyRoute(string $function_name): void
+    {
+        if (method_exists($this, $function_name)) {
+            $this->{$function_name}();
+        } else {
+            require_once "{$this->getRoot()}/Views/HTTP501.php";
+            $this->setStatusCode(501);
+            header("Content-Type: text/html; charset=UTF-8", true, $this->getStatusCode());
+            header("Date: {$current_time}", true, $this->getStatusCode());
+            header("Expires: {$expiry_time}", true, $this->getStatusCode());
+            header("Cache-Control: private; max-age=3600", true, $this->getStatusCode());
+            header("Server: Mind Blower", true, $this->getStatusCode());
+            header_remove("Pragma");
+            exit;
+        }
+    }
+
+    /**
+     * Taking the action needed for the index route of the portal.
      * @return void
      */
     public function index(): void
