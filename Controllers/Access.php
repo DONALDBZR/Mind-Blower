@@ -41,6 +41,8 @@ class Access extends Router
      */
     public function verifyRoute(string $function_name): void
     {
+        $current_time = date("Y-m-d H:i:s", $this->getCurrentTime());
+        $expiry_time = date("Y-m-d H:i:s", $this->getExpiryTime());
         if (method_exists($this, $function_name)) {
             $this->{$function_name}();
         } else {
