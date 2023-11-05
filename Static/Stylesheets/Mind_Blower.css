@@ -218,14 +218,17 @@ body {
 }
 body[status="404"] header,
 body[status="404"] main,
-body[id*="Access"] main div:nth-child(1) div:nth-child(1) {
+body[id*="Access"] main div:nth-child(1) div:nth-child(1),
+body[status="501"] header,
+body[status="501"] main {
     font-family: var(--proximaNova);
 }
 body[status="404"] footer svg g path,
 #Homepage header nav div:nth-child(1) a:hover svg g path,
 #Homepage footer svg g path,
 body[id*="Access"] header nav div:nth-child(1) a:hover svg g path,
-body[id*="Access"] footer svg g path {
+body[id*="Access"] footer svg g path,
+body[status="501"] footer svg g path {
     fill: var(--color2);
 }
 #Homepage header nav div:nth-child(1) a svg g path,
@@ -234,7 +237,8 @@ body[id*="Access"] header nav div:nth-child(1) a svg g path {
 }
 body[status="404"] header,
 #Homepage header nav div:nth-child(2) a,
-body[id*="Access"] header nav div:nth-child(2) a {
+body[id*="Access"] header nav div:nth-child(2) a,
+body[status="501"] header {
     color: var(--color3);
 }
 #Homepage header nav div:nth-child(2) a:hover,
