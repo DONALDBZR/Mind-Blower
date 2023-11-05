@@ -77,7 +77,7 @@ class Header extends React.Component {
         if (this.state.System.status == 200) {
             return this.verifyRoute();
         } else {
-            return <NotFound />;
+            return this.handleError();
         }
     }
 }
