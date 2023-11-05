@@ -52,7 +52,7 @@ class Router
     {
         $this->setRoot($_SERVER['DOCUMENT_ROOT']);
         $this->setRoute($_SERVER['REQUEST_URI']);
-        $this->setRequestMethod($_SERVER['REQUEST_METHOD']);
+        $this->setRequestMethod(strtolower($_SERVER['REQUEST_METHOD']));
         $this->initialize();
     }
 
@@ -137,11 +137,21 @@ class Router
         $this->setExpiryTime($this->getCurrentTime() + 3600);
         $routes = explode("/", $this->getRoute());
         if ($this->getRoute() == "/") {
+            $this->setPath("/Views/Homepage.php");
             $this->index();
         } else {
             $this->{$routes[1]}();
         }
         exit;
+    }
+
+    /**
+     * The actions needed to be taken for the homepage.
+     * @return void
+     */
+    public function index(): void
+    {
+        $this->{$this->getRequestMethod()}($this->getPath());
     }
 
     /**
