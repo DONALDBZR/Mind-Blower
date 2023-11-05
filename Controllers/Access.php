@@ -39,6 +39,6 @@ class Access extends Router
      */
     public function index(): void
     {
-        $this->get("/Views/Access/Homepage.php");
+        $this->{$this->getRequestMethod()}("/Views/Access/Homepage.php");
     }
 }

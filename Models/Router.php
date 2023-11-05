@@ -140,6 +140,7 @@ class Router
             $this->setPath("/Views/Homepage.php");
             $this->index();
         } else {
+            $this->setPath("/Controllers/{$routes[1]}.php");
             $this->verifyModule($routes[1]);
         }
         exit;
@@ -155,7 +156,6 @@ class Router
     {
         $current_time = date("Y-m-d H:i:s", $this->getCurrentTime());
         $expiry_time = date("Y-m-d H:i:s", $this->getExpiryTime());
-        $this->setPath("/Controllers/{$module}.php");
         if (file_exists("{$this->getRoot()}{$this->getPath()}")) {
             require_once "{$this->getRoot()}{$this->getPath()}";
             new $module();
